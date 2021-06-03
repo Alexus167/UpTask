@@ -13,6 +13,8 @@ app.set('view engine', 'pug');
 // añado la carpeta de las vistas
 app.set('views', path.join(__dirname, './views'));
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/', routes());
 
 app.listen(3000);
