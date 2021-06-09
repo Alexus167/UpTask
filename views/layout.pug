@@ -6,6 +6,8 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(href="/css/normalize.css", rel="stylesheet")
         link(href="/css/app.css", rel="stylesheet")
+        link(rel="preconnect" href="https://fonts.gstatic.com/%22")
+        link(href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet")
 
         title #{title}
     body 
@@ -16,19 +18,19 @@ html(lang="en")
         main.contenedor
             aside.contenedor-proyectos 
                 .panel.crear-proyecto
-                    a(href="nuevoProyecto", class="boton") Nuevo Proyecto 
+                    a(href="/nuevoProyecto", class="boton") Nuevo Proyecto 
                     span +
                 .panel.lista-proyectos 
                     h2 Proyectos
                     ul#proyectos.proyectos 
-                        li 
-                            a(href="#") Diseño de Tienda Virtual
-                        li 
-                            a(href="#") Diseño de Nuevo Blog
-                        li 
-                            a(href="#") Diseño de Logo       
+                        if(proyectos.length)
+                            each proyecto in proyectos 
+                                li
+                                    a(href=`/proyectos/${proyecto.url}}`)= proyecto.name       
                     
             block contenido
-                     
+
+            //- pre= vardump(proyectos)
+        script(src="/dist/bundle.js")             
 
             

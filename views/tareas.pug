@@ -1,0 +1,13 @@
+extends layout
+
+block contenido
+    .contenido-principal
+        h1 #{title} - #{proyecto.name}
+
+        //- pre= vardump(proyecto)
+        
+        .contenedor-acciones
+            a(href=`/proyecto/editar/${proyecto.id}` class="boton") Editar Proyecto 
+            button#eliminar-proyecto(data-proyecto-url=proyecto.url type="button" class="boton eliminar") Eliminar Proyecto 
+
+        
