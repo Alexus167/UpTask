@@ -18,7 +18,7 @@ if(btnEliminar){
             confirmButtonText: 'Si, quiero borrarlo',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.value) {
                 //Envio peticion a axios
                 const url = `${location.origin}/proyectos/${urlProyecto}`;
                 // console.log(url);

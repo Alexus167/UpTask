@@ -48,7 +48,7 @@ exports.nuevoProyecto = async (req,res) => {
     };
 }    
 
-exports.proyectoPorUrl = async (req,res,next) => {
+exports.proyectoPorUrl = async (req, res, next) => {
     const proyectosPromise = db.Proyectos.findAll();
 
     const proyectoPromise = db.Proyectos.findOne({
@@ -59,11 +59,21 @@ exports.proyectoPorUrl = async (req,res,next) => {
 
     const [proyectos, proyecto] = await Promise.all([proyectosPromise, proyectoPromise]);
 
+        //Consulto tareas del proyecto actual
+        const tareas = await db.Tareas.findAll({
+            where: {
+                proyectoId: proyecto.id
+            }
+        });
+
         if(!proyecto) return next();
         res.render('tareas', {
             title: 'Tareas del Proyecto',
             proyecto,
-            proyectos
+            proyectos,
+            tareas
+
+
         });
 }
 
