@@ -25,9 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'usuarios',
     hooks: {
       beforeCreate(usuario) {
-        usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10));
+        usuario.password = bcrypt.hashSync(usuario.password,bcrypt.genSaltSync(10));
       }
-  }
+  },
   });
+  //metodo personalizado
+  Usuarios.prototype.verificarPassword = function(password){
+    return bcrypt.compareSync(password, this.password);
+  }
   return usuarios;
 };
