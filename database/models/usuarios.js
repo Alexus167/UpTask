@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
   };
   usuarios.init({
     email: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    token: DataTypes.STRING,
+    expiracion: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'usuarios',

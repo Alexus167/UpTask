@@ -33,6 +33,12 @@ module.exports = {
           }
         }
       },
+      token:{
+        type: Sequelize.STRING(60),
+      },
+      expiracion: { 
+        type: Sequelize.DATE,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
