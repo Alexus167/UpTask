@@ -4,6 +4,7 @@ const Usuarios = require('../database/models/usuarios');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const bcrypt = require('bcrypt');
+const enviarEmail = require('../handlers/email');
 
 
 
@@ -50,6 +51,17 @@ exports.enviarToken = async (req,res) => {
 
     //url de reset
     const resetUrl = `http://${req.headers.host}/reestablecer/${ususario.token}`;
+
+    //envio el correo
+
+    await enviarEmail.enviar({
+        usuario,
+        subject: 'Password Reset',
+        resetUrl,
+        archivo: 'reestablecerPassword'
+    });
+    req.flash('correcto', 'Se envió un mail a tu correo');
+    res.redirect('/iniciarSesion')
 }
 
 exports.resetPassword = async (req, res) => {
