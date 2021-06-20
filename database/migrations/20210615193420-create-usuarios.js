@@ -33,6 +33,10 @@ module.exports = {
           }
         }
       },
+      activo: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
       token:{
         type: Sequelize.STRING(60),
       },

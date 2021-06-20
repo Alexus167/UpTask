@@ -1,4 +1,5 @@
 const Usuarios = require('../database/models/usuarios');
+const enviarEmail = require('../handlers/email');
 
 exports.formCrearCuenta = (req,res) => {
     res.render('crearCuenta', {
@@ -14,8 +15,25 @@ exports.crearCuenta = async (req,res) => {
             email,
             password
         });
-        res.redirect('/iniciarSesion');
-    } catch (error) {
+
+        //URL de confirmacion
+        const confirmarUrl = `http://${req.headers.host}/confirmar/${email}`;
+
+        //objeto de usuario
+        const usuario = {
+            email
+        }
+
+        //enviar email
+        await enviarEmail.enviar({
+            usuario,
+            subject: 'Bienvenido a UpTask',
+            confirmarUrl,
+            archivo: 'confirmarCuenta'
+        });
+        req.flash('correcto', 'Se envió un mail a tu correo, confirma tu cuenta');
+        res.redirect('/iniciarSesion')
+        } catch (error) {
         req.flash('error', error.errors.map(error => error.message));
         res.render('crearCuenta', {
             mensajes: req.flash(),
@@ -39,4 +57,24 @@ exports.formRestablecerPassword = (req,res) => {
     res.render('reestablecer', {
         title: 'Reestablece tu contraseña'
     })
+}
+
+//cambia el estado de una cuenta
+exports.confirmarCuenta = async (req,res) => {
+    const usuario = await Usuarios.findOne({
+        where: {
+            email: req.params.correo
+        }
+    })
+
+    if(!usuario) {
+        req.flash('error', 'No valido');
+        res.redirect('crearCuenta');
+    }
+
+    usuario.activo = 1
+    await usuario.save();
+
+    req.flash('correcto', 'Cuenta activada correctamente');
+    res.redirect('iniciarSesion');
 }

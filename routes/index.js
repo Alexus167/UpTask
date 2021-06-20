@@ -6,6 +6,7 @@ const proyectosController = require('../controllers/proyectosControllers');
 const tareasController = require('../controllers/tareasController');
 const usuariosController = require('../controllers/usuariosControllers');
 const authController = require('../controllers/authController');
+const usuarios = require('../database/models/usuarios');
 module.exports = function () {
 
 router.get('/', authController.usuarioAutenticado, proyectosController.proyectosHome );
@@ -40,6 +41,7 @@ router.delete('/tareas/:id', authController.usuarioAutenticado, tareasController
 //Crear usuario
 router.get('/crearCuenta', usuariosController.formCrearCuenta );
 router.post('/crearCuenta', usuariosController.crearCuenta );
+router.get('/confirmar/:correo', usuariosController.confirmarCuenta);
 
 //Inicio de sesion
 router.get('/iniciarSesion', usuariosController.formIniciarSesion );
@@ -53,6 +55,8 @@ router.get('/reestablecer', usuariosController.formRestablecerPassword);
 router.post('/reestablecer', authController.enviarToken);
 router.get('/reestablecer/:token', authController.resetPassword);
 router.post('/reestablecer/:token', authController.actualizarPassword);
+
+
 
 return router;
 }

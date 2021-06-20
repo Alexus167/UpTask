@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   usuarios.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
+    activo: DataTypes.INTEGER,
     token: DataTypes.STRING,
     expiracion: DataTypes.DATE,
   }, {
